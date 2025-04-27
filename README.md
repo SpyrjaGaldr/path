@@ -7,7 +7,7 @@ ______         _    _
 \_|     \__,_| \__||_| |_|
 
 ```
-A simple cross-platform utility for printing out paths.
+A simple cross-platform utility for printing paths.
 
 ## Description
 
@@ -15,7 +15,7 @@ The `path` command provides a quick and easy interface for locating directories 
 
 ### Installing
 
-Implementation is written in plain vanilla C as a single source file (roughly ~400 LOC).  Just compile `path.c` directly with your favorite compiler. The provided makefile can be used if `make` is available on your system (Windows and Linux-like platforms).
+Implementation is written in plain vanilla C as a single source file (roughly ~400 LOC).  Just compile `path.c` directly with your favorite compiler. The provided makefile can be used if 'make' is available on your system (Windows and Linux-like platforms).
 
 Clone the repository:
 
@@ -39,7 +39,7 @@ make all CC=clang
 sudo make install
 
 # compile and install into folder ~/Somewhere
-make all INSTALL_DIR=~/Somewhere # may require 'sudo'
+make install INSTALL_DIR=~/Somewhere # may require 'sudo'
 ```
 
 ### Usage
@@ -104,7 +104,7 @@ path src
 # list all files ending in ".so" or ".so.1", checking
 #  first in the /lib32 folder, then in /lib64
 
-path -f -s -d /lib32:/lib64 .so .so.1
+path -fsd /lib32:/lib64 .so .so.1
 
 # find all directories (starting from the root folder)
 #  named "Downloads" (case-sensitive)
@@ -113,12 +113,12 @@ path -c Downloads
 
 # list all files beginning with "RT_" (or even "rT_")
 
-path  -p -f -d /etc rt_
+path -pfd /etc rt_
 
 # list all python source files, restricting search
 #  to the $PATH environment variable
 
-path -d $PATH -f *.py
+path -fd $PATH *.py
 ```
 
 ### License: MIT
