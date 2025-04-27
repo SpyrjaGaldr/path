@@ -260,7 +260,8 @@ int usage(char* argv0) {
       stderr);
   fputs(
       "* Each additional search directory must be specified with a separate -d "
-      "flag\n",
+      "flag\n  (multiple directories can be included by separating them with "
+      "a ':' or ';' character)\n",
       stderr);
   fputs(
       "* Warnings (enabled with the -w flag) may occur with insufficient "
