@@ -4,7 +4,7 @@ ______         _    _
 | |_/ /  __ _ | |_ | |__
 |  __/  / _` || __|| '_ \
 | |    | (_| || |_ | | | |
-\_|     \__,_| \__||_| |_|
+\_|     \__,_| \__||_| |_| v25.4.27
 
 ```
 A simple cross-platform utility for printing paths.
@@ -38,8 +38,8 @@ make all CC=clang
 # install to /usr/bin (Linux) or C:\Program Files (Windows)
 sudo make install
 
-# compile and install into folder ~/Somewhere
-make install INSTALL_DIR=~/Somewhere # may require 'sudo'
+# compile and install somewhere else
+make install INSTALL_DIR=~/Somewhere/Else # may require 'sudo'
 ```
 
 ### Usage
