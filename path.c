@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.4.23 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.4.27 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
@@ -39,7 +39,7 @@ const char* version_info = "path v25.4.23 Copyright © 2025 SpyrjaGaldr";
 #define chdir _chdir
 #define stat _stat
 #ifdef NO_MSYS
-#define fnmatch(gist, text, ign) PathMatchSpec(text, gist)
+#define fnmatch(gist, text, ignored) PathMatchSpec(text, gist)
 #endif
 const char* root_directory = "C:\\";
 char path_delimiter = '\\';
@@ -73,7 +73,7 @@ bool wildcard_match(const char* text, const char* gist) {
 }
 
 bool fuzzy_match(const char* text, const char* gist) {
-  for (;;) {
+  while (true) {
     char rhs = *gist;
     if (rhs == 0)
       return true;
@@ -228,7 +228,7 @@ void traverse_directory(const char* directory) {
   free(sav);
 }
 
-int usage(char* argv0) {
+int usage(const char* argv0) {
   fprintf(stderr, "%s\n", version_info);
   fprintf(stderr,
           "Usage: %s [-d DIRECTORY] [-f] [-n MAX] [-c] [-e] [-z] [-p] [-s] "
@@ -351,7 +351,7 @@ int main(int argc, char** argv) {
   for (size_t ddx = 0; ddx < directory_counter; ++ddx) {
     const char* dpt = directory_list[ddx];
     struct stat inf;
-    if (stat(dpt, &inf) != 0 || !S_ISDIR(inf.st_mode)) {
+    if (lstat(dpt, &inf) != 0 || !S_ISDIR(inf.st_mode)) {
       fprintf(stderr, "Error: cannot stat directory '%s'\n", dpt);
       continue;
     }
