@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.4.27 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.4.28 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
