@@ -20,7 +20,7 @@ Implementation is written in plain vanilla C as a single source file (roughly ~4
 Clone the repository:
 
 ```bash
-git clone https://gitlab.com/SpyrjaGaldr/path && cd path
+git clone https://github.com/SpyrjaGaldr/path && cd path
 ```
 
 Build and install:
