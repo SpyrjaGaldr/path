@@ -39,7 +39,7 @@ make all CC=clang
 sudo make install
 
 # compile and install somewhere else
-make install INSTALL_DIR=~/Somewhere/Else # may require 'sudo'
+make install INSTALL_DIR=/home/somewhere/else
 ```
 
 ### Usage
@@ -69,11 +69,11 @@ By default, `path` performs a case-insensitive, wildcard search for directories 
 
 * -p
 
-    Prefix-search mode; target must start with a given sequence; the needle "jav" will match haystacks "javscript-snippets", "java-jar-files", etc
+    Prefix-search mode; target must start with a given sequence; the needle "jav" will match haystacks "javscript-snippets", "java-files", etc
 
 * -s
 
-    Suffix-search mode; target must END with a given sequence; ".jpg" will match "winter-in-main.jpg" (assuming `-f` flag has been specified)
+    Suffix-search mode; target must END with a given sequence; ".jpg" will match "winter-in-maine.jpg" (assuming `-f` flag has been specified)
 
 * -q
 
@@ -101,24 +101,27 @@ Note: the -e, -z, -p, and -s flags are mutually exclusive; attempting to supply 
 
 path src
 
-# list all files ending in ".so" or ".so.1", checking
-#  first in the /lib32 folder, then in /lib64
-
-path -fsd /lib32:/lib64 .so .so.1
-
 # find all directories (starting from the root folder)
 #  named "Downloads" (case-sensitive)
 
 path -c Downloads
 
-# list all files beginning with "RT_" (or even "rT_")
+# search for various types of image files
 
-path -pfd /etc rt_
+path -sf .jpg .jpeg .png
 
-# list all python source files, restricting search
-#  to the $PATH environment variable
+# list all game ROM's found available
+#  from the $PATH environment variable
 
-path -fd $PATH *.py
+path -fd $PATH *.rom
+
+# list all files ending in ".so" or ".so.1", checking
+#  first in the /lib32 folder, then in /lib64
+# Warning: NEVER search for executable content
+#  within insecure folders; both /lib32 and /lib64
+#  in this example reside in "system" directories
+
+path -fsd /lib32:/lib64 .so .so.1
 ```
 
 ### License: MIT
