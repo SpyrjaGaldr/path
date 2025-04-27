@@ -1,17 +1,18 @@
 SRC = path.c
-OBJ = path.o
 CC ?= gcc
 CFLAGS ?= -Wall -Wextra -Werror -O2
+NAME ?= path
+OBJ = $(NAME).o
 
 ifeq ($(OS), Windows_NT)
-	EXEC  ?= path.exe
+	EXEC  = $(NAME).exe
 	CFLAGS += -D WIN32
-	DLIM = \
+	DLIM = "\\"
 	INSTALL_DIR ?= C:\Program Files
 	RM = del
 	IGNORE = 2> NUL
 else
-	EXEC  ?= path
+	EXEC  = $(NAME)
 	DLIM = /
 	INSTALL_DIR ?= /usr/local/bin
 	RM = rm
