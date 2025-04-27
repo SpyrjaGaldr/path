@@ -110,8 +110,8 @@ path -c Downloads
 
 path -sf .jpg .jpeg .png
 
-# list all game ROM's found available
-#  from the $PATH environment variable
+# list all game ROM's available, restricted
+#  to the $PATH environment variable
 
 path -fd $PATH *.rom
 
