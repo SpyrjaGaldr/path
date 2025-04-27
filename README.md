@@ -4,7 +4,7 @@ ______         _    _
 | |_/ /  __ _ | |_ | |__
 |  __/  / _` || __|| '_ \
 | |    | (_| || |_ | | | |
-\_|     \__,_| \__||_| |_| v25.4.27
+\_|     \__,_| \__||_| |_| v25.4.28
 
 ```
 A simple cross-platform utility for printing paths.
@@ -40,6 +40,12 @@ sudo make install
 
 # compile and install somewhere else
 make install INSTALL_DIR=/home/somewhere/else
+
+# compile and install as the "where" command
+make install NAME=where
+
+# uninstall the "where" command
+make uninstall NAME=where
 ```
 
 ### Usage
