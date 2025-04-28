@@ -42,3 +42,4 @@ uninstall: clean
 	$(RM) -f $(INSTALL_DIR)$(DLIM)$(EXEC)
 
 .PHONY: all install clean uninstall
+
