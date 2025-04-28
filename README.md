@@ -4,7 +4,7 @@ ______         _    _
 | |_/ /  __ _ | |_ | |__
 |  __/  / _` || __|| '_ \
 | |    | (_| || |_ | | | |
-\_|     \__,_| \__||_| |_| v25.4.28
+\_|     \__,_| \__||_| |_| v25.4.29
 
 ```
 A simple cross-platform utility for printing paths.
@@ -50,8 +50,7 @@ make uninstall NAME=where
 
 ### Usage
 
-By default, `path` performs a case-insensitive, wildcard search for directories ("haystacks") matching a given criteria (one or more "needles"). If no search directories are specified, the program defaults to the system root directory.
-
+By default, `path` performs a case-insensitive, wildcard search for directories ("haystacks") matching a given criteria (one or more "needles"). If no search directories are specified, the program will first look in the current folder, then in the system root directory.
 
 * -d DIRECTORY
 
@@ -132,3 +131,4 @@ path -fsd /lib32:/lib64 .so .so.1
 
 ### License: MIT
 Copyright © 2025 SpyrjaGaldr (spyrja@proton.me)
+
