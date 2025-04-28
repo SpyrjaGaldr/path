@@ -15,7 +15,7 @@ The `path` command provides a quick and easy interface for locating directories 
 
 ### Installing
 
-Implementation is written in plain vanilla C as a single source file (roughly ~400 LOC).  Just compile `path.c` directly with your favorite compiler. The provided makefile can be used if 'make' is available on your system (Windows and Linux-like platforms).
+The program is written in plain vanilla C and implemented as a single source file (roughly ~400 LOC) so it can be compiled directly with your favorite compiler. Otherwise the provided makefile can be used if 'make' is available on your system (Windows and Linux-like platforms).
 
 Clone the repository:
 
@@ -42,10 +42,10 @@ sudo make install
 make install INSTALL_DIR=/home/somewhere/else
 
 # compile and install as the "where" command
-make install NAME=where
+sudo make install NAME=where
 
 # uninstall the "where" command
-make uninstall NAME=where
+sudo make uninstall NAME=where
 ```
 
 ### Usage
@@ -78,7 +78,7 @@ By default, `path` performs a case-insensitive, wildcard search for directories 
 
 * -s
 
-    Suffix-search mode; target must END with a given sequence; ".jpg" will match "winter-in-maine.jpg" (assuming `-f` flag has been specified)
+    Suffix-search mode; target must end with a given sequence; ".jpg" will match "winter-in-maine.jpg" (assuming `-f` flag has been specified)
 
 * -q
 
