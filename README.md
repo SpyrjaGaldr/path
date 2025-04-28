@@ -74,7 +74,7 @@ By default, `path` performs a case-insensitive, wildcard search for directories 
 
 * -p
 
-    Prefix-search mode; target must start with a given sequence; the needle "jav" will match haystacks "javscript-snippets", "java-files", etc
+    Prefix-search mode; target must start with a given sequence; the pattern "jav" will match "[jav]script-snippets", "[jav]a-files", etc
 
 * -s
 
