@@ -65,6 +65,7 @@ size_t needle_counter = 0;
 const char** directory_list = NULL;
 size_t directory_counter = 0;
 const char* first_directory = NULL;
+bool no_arguments = true;
 
 bool wildcard_match(const char* text, const char* gist) {
   int flg = 0;
@@ -117,40 +118,28 @@ bool suffixed_match(const char* text, const char* suffix) {
 }
 
 void process_next(const char* directory, const char* path) {
-  bool fnd = false;
+  bool fnd = no_arguments;
   size_t ndx = needle_counter;
-  while (ndx--) {
+  while (!fnd && ndx--) {
     const char* ned = needle_list[ndx];
     if (exact_mode) {
-      if (strcmp(path, ned) == 0) {
+      if (strcmp(path, ned) == 0)
         fnd = true;
-        break;
-      }
     } else if (prefix_mode) {
-      if (prefixed_match(path, ned)) {
+      if (prefixed_match(path, ned))
         fnd = true;
-        break;
-      }
     } else if (suffix_mode) {
-      if (suffixed_match(path, ned)) {
+      if (suffixed_match(path, ned))
         fnd = true;
-        break;
-      }
     } else if (fuzzy_mode) {
-      if (fuzzy_match(path, ned)) {
+      if (fuzzy_match(path, ned))
         fnd = true;
-        break;
-      }
     } else if (case_sensitive) {
-      if (strcasecmp(path, ned) == 0) {
+      if (strcasecmp(path, ned) == 0)
         fnd = true;
-        break;
-      }
     } else {
-      if (wildcard_match(path, ned)) {
+      if (wildcard_match(path, ned))
         fnd = true;
-        break;
-      }
     }
   }
   if (fnd) {
@@ -224,13 +213,18 @@ void traverse_directory(const char* directory) {
   free(cur);
 }
 
+int print_version(void) {
+  printf("%s\n", version_info);
+  return EXIT_SUCCESS;
+}
+
 int usage(const char* argv0) {
-  fprintf(stderr, "%s\n", version_info);
+  print_version();
   fprintf(stderr,
           "Usage: %s [-d DIRECTORY] [-f] [-n MAX] [-c] [-e] [-z] [-p] [-s] "
           "[-q] [-x] "
           "[-w] [-v] "
-          "[NEEDLE(S)...]\n",
+          "[PATTERN(S)...]\n",
           argv0);
   fputs("  -d  Include DIRECTORY\n", stderr);
   fputs("  -f  Look for files\n", stderr);
@@ -274,8 +268,6 @@ void add_directory(const char* directory) {
 }
 
 int main(int argc, char** argv) {
-  if (argc == 1)
-    return usage(argv[0]);
   while (true) {
     int opt = tolower(getopt(argc, argv, "d:fn:cezpsqxwvh"));
     if (opt < 0)
@@ -321,7 +313,7 @@ int main(int argc, char** argv) {
     else if (opt == 'w')
       warnings_on = true;
     else if (opt == 'v')
-      fprintf(stderr, "%s\n", version_info);
+      return print_version();
     else
       return usage(argv[0]);
   }
@@ -333,13 +325,12 @@ int main(int argc, char** argv) {
         stderr);
     return usage(argv[0]);
   }
-  size_t num = 0;
   for (int index = optind; index < argc; index++) {
     size_t mor = needle_counter + 1;
     needle_list = realloc(needle_list, mor * sizeof(char*));
     needle_list[needle_counter] = argv[index];
     needle_counter = mor;
-    ++num;
+    no_arguments = false;
   }
   if (directory_list == NULL) {
     traverse_directory(".");
@@ -353,13 +344,7 @@ int main(int argc, char** argv) {
         fprintf(stderr, "Error: cannot stat directory '%s'\n", dpt);
         continue;
       }
-      if (num != 0)
-        traverse_directory(dpt);
+      traverse_directory(dpt);
     }
-  if (num == 0) {
-    if (warnings_on)
-      fputs("Warning: nothing was processed\n", stderr);
-  }
-  quiet_chdir("/");
   return EXIT_SUCCESS;
 }
