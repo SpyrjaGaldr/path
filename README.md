@@ -50,7 +50,7 @@ make uninstall NAME=where
 
 ### Usage
 
-By default, `path` performs a case-insensitive, wildcard search for directories ("haystacks") matching a given criteria (one or more "needles"). If no search directories are specified, the program will first look in the current folder, then in the system root directory.
+By default, `path` performs a case-insensitive, wildcard search for directories (or optionally files) matching one or more set of criteria. If none is specified, all directories/files will be marked as matched. If the search directory is unspecified, the program will first look in the current folder and then in the system root directory.
 
 * -d DIRECTORY
 
@@ -101,23 +101,25 @@ Note: the -e, -z, -p, and -s flags are mutually exclusive; attempting to supply 
 ### Examples
 
 ```bash
+#  print all directories, starting from the root
+path
+
+#  print all files in the current folder recursively
+path -f
+
 # find all directories named "src" (or even "SRC"),
 #  starting in the system root directory
-
 path src
 
 # find all directories (starting from the root folder)
 #  named "Downloads" (case-sensitive)
-
 path -c Downloads
 
 # search for various types of image files
-
 path -sf .jpg .jpeg .png
 
 # list all game ROM's available, restricted
 #  to the $PATH environment variable
-
 path -fd $PATH *.rom
 
 # list all files ending in ".so" or ".so.1", checking
@@ -125,7 +127,6 @@ path -fd $PATH *.rom
 # Warning: NEVER search for executable content
 #  within insecure folders; both /lib32 and /lib64
 #  in this example reside in "system" directories
-
 path -fsd /lib32:/lib64 .so .so.1
 ```
 
