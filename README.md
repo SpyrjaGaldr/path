@@ -4,14 +4,14 @@ ______         _    _
 | |_/ /  __ _ | |_ | |__
 |  __/  / _` || __|| '_ \
 | |    | (_| || |_ | | | |
-\_|     \__,_| \__||_| |_| v25.4.29
+\_|     \__,_| \__||_| |_|  v25.4.30
 
 ```
 A simple cross-platform utility for printing paths.
 
 ## Description
 
-The `path` command provides a quick and easy interface for locating directories (or even files) for the primary purpose of helping other programs know where to find stuff.
+The `path` command provides a quick and easy interface for locating directories (or even files). A directory may be a symlink, and file can either be a "regular file" or symlink, a character or block device, a FIFO/pipe, or a socket.
 
 ### Installing
 
@@ -132,4 +132,3 @@ path -fsd /lib32:/lib64 .so .so.1
 
 ### License: MIT
 Copyright © 2025 SpyrjaGaldr (spyrja@proton.me)
-
