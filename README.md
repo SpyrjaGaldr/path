@@ -50,7 +50,7 @@ sudo make uninstall NAME=where
 
 ### Usage
 
-By default, `path` performs a case-insensitive, wildcard search for directories (or optionally files) matching one or more set of criteria. If none is specified, all directories/files will be marked as matched. If the search directory is unspecified, the program will first look in the current folder and then in the system root directory.
+By default, `path` performs a case-insensitive, wildcard search for directories (or optionally files) matching one or more set of criteria. If none is specified, all candidates will be marked as matching. If the search directory is unspecified, the program will first look in the current folder and then in the system root directory.
 
 * -d DIRECTORY
 
