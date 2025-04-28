@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.4.30 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.4.31 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
@@ -205,9 +205,9 @@ void traverse_directory(const char* directory) {
         stat(pth, &inf);
         if (S_ISDIR(inf.st_mode)) {
           if (!file_search)
-            continue;
-        }
-        process_next(cur, pth);
+            process_next(cur, pth);
+        } else if (file_search)
+          process_next(cur, pth);
       } else if (S_ISDIR(inf.st_mode)) {
         if (!file_search)
           process_next(cur, pth);
