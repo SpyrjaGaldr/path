@@ -178,7 +178,7 @@ void traverse_directory(const char* directory) {
   DIR* dir = opendir(directory);
   if (dir == NULL) {
     if (warnings_on)
-      fprintf(stderr, "Error: cannot open directory '%s' (access denied)\n",
+      fprintf(stderr, "Warning: cannot open directory '%s' (access denied)\n",
               directory);
     return;
   }
@@ -197,7 +197,7 @@ void traverse_directory(const char* directory) {
         if (warnings_on)
           fprintf(
               stderr,
-              "Error: cannot stat file/directory '%s%c%s' (access denied)\n",
+              "Warning: cannot stat file/directory '%s%c%s' (access denied)\n",
               directory, path_delimiter, pth);
         continue;
       }
