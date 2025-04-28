@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.4.28 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.4.29 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
@@ -64,6 +64,7 @@ const char** needle_list = NULL;
 size_t needle_counter = 0;
 const char** directory_list = NULL;
 size_t directory_counter = 0;
+const char* first_directory = NULL;
 
 bool wildcard_match(const char* text, const char* gist) {
   int flg = 0;
@@ -184,7 +185,7 @@ void quiet_chdir(const char* path) {
   (void)ret;
 }
 
-void traverse_directory_recursive_(const char* directory) {
+void traverse_directory(const char* directory) {
   DIR* dir = opendir(directory);
   if (dir == NULL) {
     if (warnings_on)
@@ -194,38 +195,33 @@ void traverse_directory_recursive_(const char* directory) {
   }
   quiet_chdir(directory);
   char* cur = current_directory();
-  while (true) {
-    struct dirent* nxt = readdir(dir);
-    if (nxt == NULL)
-      break;
-    char* pth = nxt->d_name;
-    if (strcmp(pth, ".") == 0 || strcmp(pth, "..") == 0)
-      continue;
-    struct stat inf;
-    if (lstat(pth, &inf) != 0) {
-      if (warnings_on)
-        fprintf(stderr,
-                "Error: cannot stat file/directory '%s%c%s' (access denied)\n",
-                directory, path_delimiter, pth);
-      continue;
-    }
-    if (S_ISDIR(inf.st_mode)) {
-      if (!file_search)
+  if (first_directory == NULL || strcmp(cur, first_directory) != 0)
+    while (true) {
+      struct dirent* nxt = readdir(dir);
+      if (nxt == NULL)
+        break;
+      char* pth = nxt->d_name;
+      if (strcmp(pth, ".") == 0 || strcmp(pth, "..") == 0)
+        continue;
+      struct stat inf;
+      if (lstat(pth, &inf) != 0) {
+        if (warnings_on)
+          fprintf(
+              stderr,
+              "Error: cannot stat file/directory '%s%c%s' (access denied)\n",
+              directory, path_delimiter, pth);
+        continue;
+      }
+      if (S_ISDIR(inf.st_mode)) {
+        if (!file_search)
+          process_next(cur, pth);
+        traverse_directory(pth);
+        quiet_chdir(cur);
+      } else if (S_ISREG(inf.st_mode) && file_search)
         process_next(cur, pth);
-      traverse_directory_recursive_(pth);
-      quiet_chdir(cur);
-    } else if (S_ISREG(inf.st_mode) && file_search)
-      process_next(cur, pth);
-  }
+    }
   closedir(dir);
   free(cur);
-}
-
-void traverse_directory(const char* directory) {
-  char* sav = current_directory();
-  traverse_directory_recursive_(directory);
-  quiet_chdir(sav);
-  free(sav);
 }
 
 int usage(const char* argv0) {
@@ -261,7 +257,7 @@ int usage(const char* argv0) {
   fputs(
       "* Each additional search directory must be specified with a separate -d "
       "flag\n  (multiple directories can be included by separating them with "
-      "a ':' or ';' character)\n",
+      "a ':' or ';')\n",
       stderr);
   fputs(
       "* Warnings (enabled with the -w flag) may occur with insufficient "
@@ -346,21 +342,24 @@ int main(int argc, char** argv) {
     ++num;
   }
   if (directory_list == NULL) {
-    add_directory(root_directory);
-  }
-  for (size_t ddx = 0; ddx < directory_counter; ++ddx) {
-    const char* dpt = directory_list[ddx];
-    struct stat inf;
-    if (lstat(dpt, &inf) != 0 || !S_ISDIR(inf.st_mode)) {
-      fprintf(stderr, "Error: cannot stat directory '%s'\n", dpt);
-      continue;
+    traverse_directory(".");
+    first_directory = current_directory();
+    traverse_directory(root_directory);
+  } else
+    for (size_t ddx = 0; ddx < directory_counter; ++ddx) {
+      const char* dpt = directory_list[ddx];
+      struct stat inf;
+      if (lstat(dpt, &inf) != 0 || !S_ISDIR(inf.st_mode)) {
+        fprintf(stderr, "Error: cannot stat directory '%s'\n", dpt);
+        continue;
+      }
+      if (num != 0)
+        traverse_directory(dpt);
     }
-    if (num != 0)
-      traverse_directory(dpt);
-  }
   if (num == 0) {
     if (warnings_on)
       fputs("Warning: nothing was processed\n", stderr);
   }
+  quiet_chdir("/");
   return EXIT_SUCCESS;
 }
