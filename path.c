@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.4.31 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.5.1 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
@@ -134,7 +134,7 @@ void process_next(const char* directory, const char* path) {
     } else if (fuzzy_mode) {
       if (fuzzy_match(path, ned))
         fnd = true;
-    } else if (case_sensitive) {
+    } else if (!case_sensitive) {
       if (strcasecmp(path, ned) == 0)
         fnd = true;
     } else {
@@ -249,7 +249,7 @@ int usage(const char* argv0) {
   fputs(
       "* Default behaviour is to look for directories (specify -f for files)\n",
       stderr);
-  fputs("* Fuzzy-search matches a string such as 'aoa' with 'anaconda'\n",
+  fputs("* Fuzzy-search matches a string such as 'nd_mds' with 'node_modules'\n",
         stderr);
   fputs(
       "* If neither -e, -z, -p, or -s are specified, wildcards can be used for "
