@@ -82,7 +82,7 @@ By default, `path` performs a case-insensitive, wildcard search for directories 
 
 * -q
 
-    Put all matches with embed spaces in quotes
+    Put all matches with embedded spaces in quotes
 
 * -x
 
@@ -105,7 +105,7 @@ Note: the -e, -z, -p, and -s flags are mutually exclusive; attempting to supply 
 path
 
 #  print all files in the current folder recursively
-path -f
+path -f .
 
 # find all directories named "src" (or even "SRC"),
 #  starting in the system root directory
