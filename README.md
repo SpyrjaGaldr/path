@@ -105,7 +105,7 @@ Note: the -e, -z, -p, and -s flags are mutually exclusive; attempting to supply 
 path
 
 #  print all files in the current folder recursively
-path -f .
+path -fd.
 
 # find all directories named "src" (or even "SRC"),
 #  starting in the system root directory
