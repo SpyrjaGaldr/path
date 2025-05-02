@@ -101,7 +101,7 @@ Note: the -e, -z, -p, and -s flags are mutually exclusive; attempting to supply 
 ### Examples
 
 ```bash
-#  print all directories, starting from the root
+#  print all directories in file-system
 path
 
 #  print all files in the current folder recursively
