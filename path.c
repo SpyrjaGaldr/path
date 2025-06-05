@@ -1,5 +1,5 @@
 /*
-  Copyright © 2025 SpyrjaGaldr (spyrja@proton.me)
+  Copyright © 2025 SpyrjaGaldr
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-const char* version_info = "path v25.5.1 Copyright © 2025 SpyrjaGaldr";
+const char* version_info = "path v25.6.5 Copyright © 2025 SpyrjaGaldr";
 
 #include <fnmatch.h>
 #include <ctype.h>
@@ -40,6 +40,7 @@ const char* version_info = "path v25.5.1 Copyright © 2025 SpyrjaGaldr";
 #define stat _stat
 #ifdef NO_MSYS
 #define fnmatch(gist, text, ignored) PathMatchSpec(text, gist)
+#define FNM_CASEFOLD 0
 #endif
 const char* root_directory = "C:\\";
 char path_delimiter = '\\';
@@ -133,9 +134,6 @@ void process_next(const char* directory, const char* path) {
         fnd = true;
     } else if (fuzzy_mode) {
       if (fuzzy_match(path, ned))
-        fnd = true;
-    } else if (!case_sensitive) {
-      if (strcasecmp(path, ned) == 0)
         fnd = true;
     } else {
       if (wildcard_match(path, ned))
@@ -249,8 +247,9 @@ int usage(const char* argv0) {
   fputs(
       "* Default behaviour is to look for directories (specify -f for files)\n",
       stderr);
-  fputs("* Fuzzy-search matches a string such as 'nd_mds' with 'node_modules'\n",
-        stderr);
+  fputs(
+      "* Fuzzy-search matches a string such as 'nd_mds' with 'node_modules'\n",
+      stderr);
   fputs(
       "* If neither -e, -z, -p, or -s are specified, wildcards can be used for "
       "matching\n",
@@ -348,7 +347,7 @@ int main(int argc, char** argv) {
       const char* dpt = directory_list[ddx];
       struct stat inf;
       if (lstat(dpt, &inf) != 0 || !S_ISDIR(inf.st_mode)) {
-        fprintf(stderr, "Error: cannot stat directory '%s'\n", dpt);
+        fprintf(stderr, "Warning: cannot stat directory '%s'\n", dpt);
         continue;
       }
       traverse_directory(dpt);
