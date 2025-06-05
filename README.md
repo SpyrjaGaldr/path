@@ -4,7 +4,7 @@ ______         _    _
 | |_/ /  __ _ | |_ | |__
 |  __/  / _` || __|| '_ \
 | |    | (_| || |_ | | | |
-\_|     \__,_| \__||_| |_|  v25.5.1
+\_|     \__,_| \__||_| |_|  v25.6.5
 
 ```
 A simple cross-platform utility for printing paths.
@@ -108,10 +108,10 @@ path
 path -fd.
 
 # find all directories named "src" (or even "SRC"),
-#  starting in the system root directory
+#  starting in the current folder, then from the system root directory
 path src
 
-# find all directories (starting from the root folder)
+# find all directories (starting from the current folder, then from the root folder)
 #  named "Downloads" (case-sensitive)
 path -c Downloads
 
@@ -131,4 +131,4 @@ path -fsd /lib32:/lib64 .so .so.1
 ```
 
 ### License: MIT
-Copyright © 2025 SpyrjaGaldr (spyrja@proton.me)
+Copyright © 2025 SpyrjaGaldr
